@@ -1,6 +1,9 @@
 package com.agui;
 
 import com.agui.event.BaseEvent;
+import com.agui.event.EventMixin;
+import com.agui.message.BaseMessage;
+import com.agui.message.MessageMixin;
 import com.agui.types.RunAgentInput;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,6 +30,8 @@ public class HttpClient {
 
         this.objectMapper = new ObjectMapper();
         this.objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        this.objectMapper.addMixIn(BaseEvent.class, EventMixin.class);
+        this.objectMapper.addMixIn(BaseMessage.class, MessageMixin.class);
     }
 
     public Observable<BaseEvent> streamEvents(final RunAgentInput input) {

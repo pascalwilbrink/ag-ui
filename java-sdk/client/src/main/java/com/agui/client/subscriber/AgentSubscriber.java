@@ -1,8 +1,8 @@
 package com.agui.client.subscriber;
 
-import com.agui.client.ToolCall;
 import com.agui.event.*;
 import com.agui.message.BaseMessage;
+import com.agui.types.ToolCall;
 
 public interface AgentSubscriber {
 

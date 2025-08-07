@@ -1,7 +1,6 @@
 package com.agui.event;
 
 import com.agui.types.EventType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,12 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BaseEventTest {
 
     private BaseEvent baseEvent;
-    private ObjectMapper objectMapper;
 
-    @BeforeEach
-    void setUp() {
-        objectMapper = new ObjectMapper();
-    }
 
     @Nested
     @DisplayName("Constructor Tests")
@@ -130,40 +124,6 @@ public class BaseEventTest {
             baseEvent.setRawEvent(null);
 
             assertThat(baseEvent.getRawEvent()).isNull();
-        }
-    }
-
-    @Nested
-    @DisplayName("JSON Serialization Tests")
-    class JsonSerializationTests {
-
-        @Test
-        @DisplayName("Should serialize BaseEvent to JSON correctly")
-        void shouldSerializeBaseEventToJson() throws Exception {
-            // Given
-            baseEvent = new BaseEvent(EventType.CUSTOM);
-            baseEvent.setTimestamp(1234567890);
-            baseEvent.setRawEvent("test raw event");
-
-            String json = objectMapper.writeValueAsString(baseEvent);
-
-            assertThat(json).isNotNull();
-            assertThat(json).contains("\"type\":\"CUSTOM\"");
-            assertThat(json).contains("\"timestamp\":1234567890");
-            assertThat(json).contains("\"rawEvent\":\"test raw event\"");
-        }
-
-        @Test
-        @DisplayName("Should serialize BaseEvent with null rawEvent")
-        void shouldSerializeBaseEventWithNullRawEvent() throws Exception {
-            baseEvent = new BaseEvent(EventType.CUSTOM);
-            baseEvent.setTimestamp(1234567890);
-
-            String json = objectMapper.writeValueAsString(baseEvent);
-
-            assertThat(json).isNotNull();
-            assertThat(json).contains("\"type\":\"CUSTOM\"");
-            assertThat(json).contains("\"timestamp\":1234567890");
         }
     }
 

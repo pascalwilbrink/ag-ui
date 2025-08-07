@@ -12,12 +12,12 @@ import java.util.*;
 
 public abstract class AbstractAgent {
 
-    private String agentId;
-    private String description;
-    private String threadId;
-    private List<BaseMessage> messages;
-    private State state;
-    private boolean debug = false;
+    protected String agentId;
+    protected String description;
+    protected String threadId;
+    protected List<BaseMessage> messages;
+    protected State state;
+    protected boolean debug = false;
 
     private final List<AgentSubscriber> agentSubscribers = new ArrayList<>();
 
@@ -45,7 +45,6 @@ public abstract class AbstractAgent {
     }
 
     protected abstract Observable<BaseEvent> run(final RunAgentInput input);
-
 
     public void runAgent(RunAgentParameters parameters) {
         this.runAgent(parameters, null);
@@ -117,19 +116,6 @@ public abstract class AbstractAgent {
                 });
                 System.out.println("parameters = " + parameters + ", subscriber = " + subscriber);
             }).subscribe();
-/*
-        () => this.run(input),
-                transformChunks(this.debug),
-                verifyEvents(this.debug),
-                (source$) => this.apply(input, source$, subscribers),
-                (source$) => this.processApplyEvents(input, source$, subscribers),
-                catchError((error) => {
-        return this.onError(input, error, subscribers);
-      }),
-        finalize(() => {
-        void this.onFinalize(input, subscribers);
-      }),
-*/
     }
 
 
